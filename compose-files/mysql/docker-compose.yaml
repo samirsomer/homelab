@@ -1,0 +1,23 @@
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:9.2
+    volumes:
+      - mysql_vol:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - mysql_net
+    env_file:
+      - ./.env
+
+volumes:
+  mysql_vol:
+    external: true
+    name: mysql_vol
+
+networks:
+  mysql_net:
+    external: true
+    name: mysql_net
+

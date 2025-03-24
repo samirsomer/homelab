@@ -1,0 +1,29 @@
+services:
+  nginxpm:
+    container_name: nginxpm
+    image: jc21/nginx-proxy-manager:latest
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+      - '81:81'
+    env_file:
+      - ./.env
+    volumes:
+      - nginx-data:/data
+      - nginx-certs:/etc/letsencrypt
+    networks:
+      - mysql_net
+      - frontend
+
+networks:
+  mysql_net:
+    external: true
+    name: mysql_net
+  frontend:
+    external: true
+    name: frontend
+
+volumes:
+  nginx-data:
+  nginx-certs:
