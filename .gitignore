@@ -4,7 +4,4 @@ env
 env/
 venv
 venv/
-**/config/*.js
-**/config/*.css
-**/config/*.yaml
 **/config/logs/

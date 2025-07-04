@@ -1,0 +1,52 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/services/
+
+- INFRA:
+    - Proxmox:
+        icon: https://cdn.jsdelivr.net/gh/selfhst/icons/svg/proxmox.svg
+        href: https://pve.sabdullatif.xyz
+        description: Proxmox Virtual Environment
+        widget:
+            type: proxmox
+            url: https://pve.sabdullatif.xyz
+            username: {{HOMEPAGE_VAR_PROMMOX_USERNAME}}
+            password: {{HOMEPAGE_VAR_PROMMOX_PASSWORD}}
+    - Portainer:
+        icon: https://cdn.jsdelivr.net/gh/selfhst/icons/svg/portainer.svg
+        href: https://portainer.sabdullatif.xyz
+        description: Portainer
+        widget:
+            type: portainer
+            url: https://{{HOMEPAGE_VAR_PORTAINER_HOST}}:9443
+            env: {{HOMEPAGE_VAR_PORTAINER_ENV}}
+            key: {{HOMEPAGE_VAR_PORTAINER_API_KEY}}
+
+- NETWORK SERVICES:
+    - Pihole:
+        icon: https://cdn.jsdelivr.net/gh/selfhst/icons/svg/pi-hole.svg
+        href: https://pihole.sabdullatif.xyz/admin
+        description: pihole
+        widget:
+            type: pihole
+            url: http://pihole
+            version: 6 
+            key: {{HOMEPAGE_VAR_PIHOLE_SECRET}}
+    - Nginx PM:
+        icon: https://cdn.jsdelivr.net/gh/selfhst/icons/svg/nginx-proxy-manager-light.svg
+        href: https://npm.sabdullatif.xyz
+        description: Nginx Proxy manager
+        widget:
+            type: npm
+            url: http://nginxpm:81
+            username: {{HOMEPAGE_VAR_NGINXPM_USERNMAE}}
+            password: {{HOMEPAGE_VAR_NGINXPM_PASSWORD}}
+
+- Applications:
+    - PGAdmin:
+        icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/pgadmin.png
+        href: https://pgadmin.sabdullatif.xyz
+        description: Postgres Admin
+
+
+
