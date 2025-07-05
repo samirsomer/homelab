@@ -42,11 +42,22 @@
             username: {{HOMEPAGE_VAR_NGINXPM_USERNMAE}}
             password: {{HOMEPAGE_VAR_NGINXPM_PASSWORD}}
 
+
 - Applications:
+    - Grafana:
+        icon: https://cdn.jsdelivr.net/gh/selfhst/icons/svg/grafana.svg
+        href: https://grafana.sabdullatif.xyz
+        description: Grafana
+        widget:
+            type: grafana
+            url: http://grafana:3000
+            username: {{HOMEPAGE_VAR_GRAFANA_USERNAME}}
+            password: {{HOMEPAGE_VAR_GRAFANA_PASSWORD}}
     - PGAdmin:
         icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/pgadmin.png
         href: https://pgadmin.sabdullatif.xyz
         description: Postgres Admin
-
-
-
+    - Chronograf:
+        icon: https://cdn.jsdelivr.net/gh/selfhst/icons/svg/influxdb.svg
+        href: https://chronograf.sabdullatif.xyz
+        description: Chronograf

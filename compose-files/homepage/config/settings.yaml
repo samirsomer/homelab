@@ -7,3 +7,7 @@ title: Samir HomeLab
 
 color: slate
 
+layout:
+  INFRA:
+    style: row
+    columns: 2
