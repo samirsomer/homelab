@@ -1,0 +1,31 @@
+services:
+
+  dockge:
+    image: louislam/dockge:latest
+    container_name: dockge
+    restart: unless-stopped
+
+    expose:
+      - 5001   # Dockge UI
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      # 👆 allows Dockge to control Docker
+
+      - /app/data/dockge:/app/data
+      # 👆 Dockge internal data (settings, users)
+
+      - /app/homelab:/opt/stacks
+      # 👆 THIS IS THE IMPORTANT PART
+      # Dockge will read your compose files here
+
+    environment:
+      - DOCKGE_STACKS_DIR=/opt/stacks
+      # 👆 tells Dockge where your stacks live
+
+    networks:
+      - infra_net
+
+networks:
+  infra_net:
+    external: true

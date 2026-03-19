@@ -1,0 +1,31 @@
+services:
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: unless-stopped
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - TZ=${TZ}
+
+    expose:
+      - 80
+
+    networks:
+      - shared_net
+      - infra_net
+
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+networks:
+  shared_net:
+    external: true
+    name: shared_net
+  infra_net:
+    external: true
+    name: infra_net
+
+volumes:
+  pgadmin-data:

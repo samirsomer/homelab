@@ -1,0 +1,17 @@
+services:
+  privatebin:
+    image: privatebin/nginx-fpm-alpine
+    container_name: privatebin
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - /app/data/privatebin:/srv/data
+    environment:
+      TZ: Asia/Dubai
+    networks:
+      - infra_net
+
+networks:
+  infra_net:
+    external: true
