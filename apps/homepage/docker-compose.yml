@@ -1,0 +1,31 @@
+services:
+
+  homepage:
+    container_name: homepage
+    image: ghcr.io/gethomepage/homepage:latest
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: ${HOMEPAGE_ALLOWED_HOSTS} 
+      HOMEPAGE_VAR_PIHOLE_SECRET: ${HOMEPAGE_VAR_PIHOLE_SECRET}
+      HOMEPAGE_VAR_PROMMOX_USERNAME: ${HOMEPAGE_VAR_PROMMOX_USERNAME}
+      HOMEPAGE_VAR_PROMMOX_PASSWORD: ${HOMEPAGE_VAR_PROMMOX_PASSWORD}
+      HOMEPAGE_VAR_PORTAINER_HOST: ${HOMEPAGE_VAR_PORTAINER_HOST}
+      HOMEPAGE_VAR_PORTAINER_ENV: ${HOMEPAGE_VAR_PORTAINER_ENV}
+      HOMEPAGE_VAR_PORTAINER_API_KEY: ${HOMEPAGE_VAR_PORTAINER_API_KEY}
+      HOMEPAGE_VAR_NGINXPM_USERNMAE: ${HOMEPAGE_VAR_NGINXPM_USERNMAE}
+      HOMEPAGE_VAR_NGINXPM_PASSWORD: ${HOMEPAGE_VAR_NGINXPM_PASSWORD}
+      HOMEPAGE_VAR_GRAFANA_USERNAME: ${HOMEPAGE_VAR_GRAFANA_USERNAME}
+      HOMEPAGE_VAR_GRAFANA_PASSWORD: ${HOMEPAGE_VAR_GRAFANA_PASSWORD}
+      TZ: ${TZ}
+    expose:
+      - '3000'
+    networks:
+      - infra_net
+    volumes:
+      - ./config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+
+networks:
+  infra_net:
+    name: infra_net
+    external: true
