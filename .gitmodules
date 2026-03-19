@@ -1,0 +1,3 @@
+[submodule "apps/StatementAnalyzer"]
+	path = apps/StatementAnalyzer
+	url = git@github.com:samirsomer/StatementAnalyzer.git
