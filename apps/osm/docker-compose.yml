@@ -1,0 +1,39 @@
+services:
+
+  osm-import:
+    image: overv/openstreetmap-tile-server
+    container_name: osm-import
+    volumes:
+      - osm-data:/data/database
+      - /app/data/osm/gcc-states-latest.osm.pbf:/data/region.osm.pbf:ro
+    command: import
+
+  osm:
+    image: overv/openstreetmap-tile-server
+    container_name: osm-run
+    restart: unless-stopped
+
+    expose:
+      - 80
+    
+    environment:
+      THREADS: "4"
+      AUTOVACUUM: "on"
+
+    networks:
+      - infra_net
+
+    volumes:
+      - osm-data:/data/database
+      - osm-tiles:/data/tiles
+
+    command: run
+
+networks:
+  infra_net:
+    external: true
+    name: infra_net
+
+volumes:
+  osm-data:
+  osm-tiles:
