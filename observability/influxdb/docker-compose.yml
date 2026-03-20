@@ -1,0 +1,38 @@
+services:
+
+  influxdb:
+    image: influxdb:2.7
+    container_name: influxdb
+    restart: unless-stopped
+    
+    ports:
+      - "8086:8086"
+    
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_INIT_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_INIT_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=homelab
+      - DOCKER_INFLUXDB_INIT_BUCKET=telegraf
+      - DOCKER_INFLUXDB_INIT_RETENTION=30d
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
+      - TZ=${TZ}
+
+    volumes:
+      - influxdb-data:/var/lib/influxdb2
+      - ./config:/etc/influxdb2
+    
+    networks:
+      - obs_net
+      - infra_net
+
+volumes:
+  influxdb-data:
+
+networks:
+  obs_net:
+    external: true
+    name: obs_net
+  infra_net:
+    external: true
+    name: infra_net
