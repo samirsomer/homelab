@@ -1,0 +1,82 @@
+services:
+
+  immich-server:
+    container_name: immich_server
+    image: ghcr.io/immich-app/immich-server:release
+    restart: unless-stopped
+    
+    expose:
+      - 2283
+    
+    environment:
+        # POSTGRES
+      - DB_HOSTNAME=${DB_HOSTNAME}
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE_NAME=${DB_DATABASE_NAME}
+        # REDIS
+      - REDIS_HOSTNAME=${REDIS_HOSTNAME}
+      - REDIS_PORT=${REDIS_PORT}
+
+    networks:
+      - infra_net
+      - shared_net
+    
+    volumes:
+      - /app/data/immich/uploads:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
+    
+    command: ["start.sh", "immich"]
+
+  immich-microservices:
+    image: ghcr.io/immich-app/immich-server:release
+    container_name: immich_microservices
+    restart: unless-stopped
+    
+    environment:
+        # POSTGRES
+      - DB_HOSTNAME=${DB_HOSTNAME}
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE_NAME=${DB_DATABASE_NAME}
+        # REDIS
+      - REDIS_HOSTNAME=${REDIS_HOSTNAME}
+      - REDIS_PORT=${REDIS_PORT}
+
+    networks:
+      - shared_net
+    
+    volumes:
+      - /app/data/immich/uploads:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
+
+    command: ["start.sh", "microservices"]
+
+  # OPTIONAL — enable later if you want AI features
+  immich-machine-learning:
+    image: ghcr.io/immich-app/immich-machine-learning:release
+    container_name: immich_ml
+    restart: unless-stopped
+    
+    environment:
+      - REDIS_HOSTNAME=${REDIS_HOSTNAME}
+      - REDIS_PORT=${REDIS_PORT}
+
+    networks:
+      - shared_net
+
+    volumes:
+      - model-cache:/cache
+
+volumes:
+  model-cache:
+
+networks:
+  shared_net:
+    external: true
+    name: shared_net
+  infra_net:
+    external: true
+    name: infra_net
