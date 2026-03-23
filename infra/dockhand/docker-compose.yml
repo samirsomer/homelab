@@ -1,0 +1,24 @@
+services:
+
+  dockhand:
+    image: fnsys/dockhand:latest
+    container_name: dockhand
+    restart: unless-stopped
+
+    expose:
+      - 3000
+
+    networks:
+      - infra_net
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - dockhand_data:/app/data
+
+networks:
+  infra_net:
+    external: true
+    name: infra_net
+
+volumes:
+  dockhand_data:
